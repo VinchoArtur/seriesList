@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+body{
+  background-color: #f6ebf9!important;
+}
+
+.fieldDescription {
+  background-color: #f49e51;
+  border: none;
+  color: white;
+  outline: none;
+  padding-left: 1rem;
+}
+
+input::-webkit-input-placeholder { color: white!important; }
