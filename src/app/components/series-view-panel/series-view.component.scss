@@ -1,0 +1,25 @@
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25rem;
+}
+
+.left-position {
+  display: flex;
+  justify-content: end;
+}
+
+.panel-box {
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+}
+
+.series-view {
+  width: 50rem;
+  margin: auto;
+  display: flex;
+  align-content: center;
+  flex-wrap: wrap;
+}
