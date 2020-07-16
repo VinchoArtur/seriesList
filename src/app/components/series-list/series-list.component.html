@@ -1,16 +1,36 @@
-<div class="series-panel">
-  <div class="series-panel-name">
-    name
-  </div>
-  <div class="series-panel-season">
-    season
-  </div>
-  <div class="series-panel-network">
-    network
-  </div>
-  <div class="series-panel-premiere">
+<table class="series-list-table">
+  <thead class="header">
+  <td class="item-name">
+    Name
+    <div class="filters">
+      <div class="up"></div>
+      <div class="down"></div>
+    </div>
+  </td>
+  <td class="item-genre">Season</td>
+  <td class="item-network">Network</td>
+  <td class="item-premiere">
     Premiere
-  </div>
-</div>
-
+    <div class="filters">
+      <div class="up"></div>
+      <div class="down"></div>
+    </div>
+  </td>
+  </thead>
+  <tbody>
+  <tr *ngFor="let series of seriesListContent">
+    <td>
+      <div>
+        {{series.name}}
+      </div>
+      <div >
+        <span *ngFor="let currentGenre of series.genre">{{currentGenre}}</span>
+      </div>
+      </td>
+    <td>{{series.season}}</td>
+    <td>{{series.network}}</td>
+    <td>{{series.premiereYear}}</td>
+  </tr>
+  </tbody>
+</table>
 
