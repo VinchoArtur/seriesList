@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ISeries} from '../../models/series.model';
 import * as moment from 'moment';
+import {BehaviorSubject, Subject} from 'rxjs';
+import {GenreEnum} from '../../models/genre.enum';
 
 
 @Component({
@@ -8,15 +10,21 @@ import * as moment from 'moment';
   templateUrl: './series-list.component.html',
   styleUrls: ['./series-list.component.scss']
 })
-export class SeriesListComponent implements OnInit {
+export class SeriesListComponent implements OnInit, OnChanges {
+
+  @Input() private _searchNameInput: string;
+  @Input() searchGenre: string;
+  @Input() searchYear: string;
 
   page: number = 1;
 
-  constructor() {
+  seriesListData: ISeries[];
+
+  constructor(private ref: ChangeDetectorRef) {
   }
 
   currentSeries: ISeries;
-  seriesListContent: ISeries[] = [];
+  private _seriesListContent: ISeries[] = [];
 
   ngOnInit(): void {
     this.currentSeries = {
@@ -68,13 +76,6 @@ export class SeriesListComponent implements OnInit {
       season: 4,
       premiereYear: '03.04.2020'
     };
-    let eightSeries: ISeries = {
-      name: 'Preacher',
-      genre: ['drama', 'dark comedy'],
-      network: 'AMC',
-      season: 5,
-      premiereYear: '01.01.2019'
-    };
     let nineSeries: ISeries = {
       name: 'The Terror',
       genre: ['horror', 'drama'],
@@ -89,25 +90,26 @@ export class SeriesListComponent implements OnInit {
       season: 3,
       premiereYear: '02.04.2018'
     };
-    this.seriesListContent.push(this.currentSeries, secondSeries, thirdSeries, forthSeries, fivthSeries, sixSeries, sevenSeries, eightSeries,
+    this._seriesListContent.push(this.currentSeries, secondSeries, thirdSeries, forthSeries, fivthSeries, sixSeries, sevenSeries,
       nineSeries, tenSeries);
+    this.seriesListData = this.seriesListContent;
   }
 
   genreColor(genre: string): string {
     switch (genre.toLowerCase()) {
-      case 'horror':
+      case GenreEnum.horror:
         return '#535353';
-      case 'tragedy':
+      case GenreEnum.tragedy:
         return '#ec5c5e';
-      case 'drama':
+      case GenreEnum.drama:
         return '#c06edd';
-      case 'crime':
+      case GenreEnum.crime:
         return '#a057e4';
-      case 'dark comedy':
+      case GenreEnum.darkComedy:
         return '#888888';
-      case 'fantasy':
+      case GenreEnum.fantasy:
         return '#3b99c5';
-      case 'detective':
+      case GenreEnum.detective:
         return '#efe826';
       default:
         return 'gray';
@@ -115,28 +117,80 @@ export class SeriesListComponent implements OnInit {
   }
 
   seriesNameSort(directionSort: string | null) {
-      this.seriesListContent.sort((firstSeries, secondSeries) => {
-        let firstSeriesName = firstSeries.name.toLowerCase();
-        let  secondSeriesName = secondSeries.name.toLowerCase();
-        if (firstSeriesName < secondSeriesName) {
-          return -1;
-        }
-        if (firstSeriesName > secondSeriesName) {
-          return 1;
-        }
-        return 0;
-      });
-      if (directionSort) {
-        this.seriesListContent.reverse()
+    this.seriesListData.sort((firstSeries, secondSeries) => {
+      let firstSeriesName = firstSeries.name.toLowerCase();
+      let secondSeriesName = secondSeries.name.toLowerCase();
+      if (firstSeriesName < secondSeriesName) {
+        return -1;
       }
+      if (firstSeriesName > secondSeriesName) {
+        return 1;
+      }
+      return 0;
+    });
+    if (directionSort) {
+      this.seriesListData.reverse();
+    }
   }
 
   dateSort(direction: string | null) {
-    this.seriesListContent.sort((firstSeries, secondSeries) => {
-      return moment(secondSeries.premiereYear, 'DD.MM.YYYY').valueOf() - moment(firstSeries.premiereYear, 'DD.MM.YYYY').valueOf()
+    this.seriesListData.sort((firstSeries, secondSeries) => {
+      return moment(secondSeries.premiereYear, 'DD.MM.YYYY').valueOf() - moment(firstSeries.premiereYear, 'DD.MM.YYYY').valueOf();
     });
     if (direction) {
-      this.seriesListContent.reverse()
+      this.seriesListData.reverse();
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.searchNameInput) {
+      this.seriesListData = this.seriesListContent.filter(value => value.name.toLowerCase().includes(this.searchNameInput.toLowerCase()));
+      if (this.searchGenre && this.searchGenre.toLowerCase() !== 'all') {
+        this.seriesListData = this.seriesListData.filter(value => value.genre.includes(this.searchGenre))
+      }
+      if (this.searchYear && this.searchYear.toLowerCase() !== 'all') {
+        this.seriesListData = this.seriesListData.filter(value => moment(value.premiereYear, 'DD.MM.YYYY').year().toString().toLowerCase() == moment(this.searchYear).format('YYYY').toLowerCase())
+      }
+      return
+    }
+    if (this.searchGenre && this.searchGenre.toLowerCase() !== 'all') {
+      this.seriesListData = this.seriesListContent.filter(value => value.genre.includes(this.searchGenre));
+      if (this.searchNameInput) {
+        this.seriesListData = this.seriesListData.filter(value => value.name.toLowerCase().includes(this.searchNameInput.toLowerCase()));
+      }
+      if (this.searchYear && this.searchYear.toLowerCase() !== 'all' ) {
+        this.seriesListData = this.seriesListData.filter(value => moment(value.premiereYear, 'DD.MM.YYYY').year().toString().toLowerCase() == moment(this.searchYear).format('YYYY').toLowerCase())
+      }
+      return;
+    }
+    if (this.searchYear && this.searchYear.toLowerCase() !== 'all') {
+      this.seriesListData = this.seriesListContent.filter(value => moment(value.premiereYear, 'DD.MM.YYYY').year().toString().toLowerCase() == moment(this.searchYear).format('YYYY').toLowerCase())
+      if (this.searchNameInput) {
+        this.seriesListData = this.seriesListData.filter(value => value.name.toLowerCase().includes(this.searchNameInput.toLowerCase()));
+      }
+      if (this.searchGenre && this.searchGenre.toLowerCase() !== 'all') {
+        this.seriesListData = this.seriesListData.filter(value => value.genre.includes(this.searchGenre))
+      }
+      return;
+    }
+    if (!this.searchNameInput && (!this.searchGenre || this.searchGenre.toLowerCase() == 'all') && (!this.searchYear || this.searchYear.toLowerCase() == 'all')) {
+      this.seriesListData = this.seriesListContent
+    }
+  }
+
+  get seriesListContent(): ISeries[] {
+    return this._seriesListContent;
+  }
+
+  set seriesListContent(value: ISeries[]) {
+    this._seriesListContent = value;
+  }
+
+  get searchNameInput(): string {
+    return this._searchNameInput;
+  }
+
+  set searchNameInput(value: string) {
+    this._searchNameInput = value;
   }
 }

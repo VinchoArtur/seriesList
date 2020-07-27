@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-series-view',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./series-view.component.scss']
 })
 export class SeriesViewComponent implements OnInit {
+  searchName: string;
+  genreOption: string;
+  searchPremiereYear: string;
 
   constructor() { }
 

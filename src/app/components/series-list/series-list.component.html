@@ -19,7 +19,7 @@
   </td>
   </thead>
   <tbody>
-  <tr *ngFor="let series of seriesListContent | paginate: { itemsPerPage: 5, currentPage: page }" >
+  <tr *ngFor="let series of seriesListData | paginate: { itemsPerPage: 5, currentPage: page }" >
     <td>
       <div class="table-name">
         {{series.name}}

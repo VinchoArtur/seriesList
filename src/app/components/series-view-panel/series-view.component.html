@@ -1,11 +1,26 @@
 <div class="series-view">
   <div class="panel-box question">
-    <app-name-panel></app-name-panel>
-    <app-genre-panel></app-genre-panel>
-    <app-premier-year-panel></app-premier-year-panel>
+    <input type="text" nbInput class="fieldDescription searchInput" status="control" placeholder="Name" [(ngModel)]="searchName">
+    <nb-select placeholder="Genre" filled status="warning" [(ngModel)]="genreOption" selected="0">
+      <nb-option [value]="'All'">All</nb-option>
+      <nb-option [value]="'horror'">horror</nb-option>
+      <nb-option [value]="'tragedy'">tragedy</nb-option>
+      <nb-option [value]="'drama'">drama</nb-option>
+      <nb-option [value]="'crime'">crime</nb-option>
+      <nb-option [value]="'darkComedy'">darkComedy</nb-option>
+      <nb-option [value]="'fantasy'">fantasy</nb-option>
+      <nb-option [value]="'detective'">detective</nb-option>
+    </nb-select>
+    <nb-select placeholder="Premiere Year" filled status="warning" [(ngModel)]="searchPremiereYear">
+      <nb-option value="All">All</nb-option>
+      <nb-option value="2005">2005</nb-option>
+      <nb-option value="2018">2018</nb-option>
+      <nb-option value="2019">2019</nb-option>
+      <nb-option value="2020">2020</nb-option>
+    </nb-select>
   </div>
   <div>
-    <app-series-list></app-series-list>
+    <app-series-list [_searchNameInput]="searchName" [searchGenre]="genreOption" [searchYear]="searchPremiereYear"></app-series-list>
   </div>
 </div>
 
