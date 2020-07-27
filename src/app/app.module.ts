@@ -12,6 +12,7 @@ import {SeriesViewComponent} from './components/series-view-panel/series-view.co
 import {NbIconModule, NbThemeModule, NbLayoutModule, NbFormFieldModule, NbInputModule, NbSelectModule} from '@nebular/theme';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbLayoutModule,
     NbEvaIconsModule,
     NbInputModule,
-    NbSelectModule
+    NbSelectModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

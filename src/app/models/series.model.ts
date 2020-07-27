@@ -5,3 +5,8 @@ export interface ISeries {
   network: string,
   premiereYear: string,
 }
+
+export interface ISeriesPagination {
+  itemsCount: number;
+  pageSize: number;
+}

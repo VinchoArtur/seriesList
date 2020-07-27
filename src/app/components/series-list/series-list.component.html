@@ -3,8 +3,8 @@
   <td class="item-name">
     Name
     <div class="filters">
-      <div class="up"></div>
-      <div class="down"></div>
+      <div class="up" (click)="seriesNameSort('up')"></div>
+      <div class="down" (click)="seriesNameSort(null)"></div>
     </div>
   </td>
   <td class="item-genre">Season</td>
@@ -12,25 +12,31 @@
   <td class="item-premiere">
     Premiere
     <div class="filters">
-      <div class="up"></div>
-      <div class="down"></div>
+      <div class="up" (click)="dateSort('up')"></div>
+      <div class="down" (click)="dateSort(null)">
+      </div>
     </div>
   </td>
   </thead>
   <tbody>
-  <tr *ngFor="let series of seriesListContent">
+  <tr *ngFor="let series of seriesListContent | paginate: { itemsPerPage: 5, currentPage: page }" >
     <td>
-      <div>
+      <div class="table-name">
         {{series.name}}
       </div>
-      <div >
-        <span *ngFor="let currentGenre of series.genre">{{currentGenre}}</span>
+      <div class="table-genre">
+        <span *ngFor="let currentGenre of series.genre" [style.background-color]="genreColor(currentGenre)">
+          {{currentGenre}}
+        </span>
       </div>
       </td>
-    <td>{{series.season}}</td>
-    <td>{{series.network}}</td>
-    <td>{{series.premiereYear}}</td>
+    <td class="table-season">{{series.season}}</td>
+    <td class="table-network">{{series.network}}</td>
+    <td class="table-premiere">{{series.premiereYear}}</td>
   </tr>
   </tbody>
 </table>
+<div class="series-pagination">
+  <pagination-controls previousLabel="" nextLabel="" (pageChange)="page = $event" class="series-pagination"></pagination-controls>
+</div>
 

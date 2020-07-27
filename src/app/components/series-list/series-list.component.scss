@@ -12,22 +12,23 @@
     }
 
     & .item-name {
-      width: 20rem;
+      width: 22rem;
       padding-left: 1.2rem;
     }
 
     & .item-genre {
-      width: 12rem;
-      padding-left: 3.2rem;
+      width: 11rem;
+      padding-left: 3.5rem;
     }
 
     & .item-network {
-
+      width: 8rem;
+      padding-left: 2.1rem;
     }
 
     & .item-premiere {
-      width: 10rem;
-      padding-left: 3rem;
+      width: 11.5rem;
+      padding-left: 4.5rem;
     }
 
     & .filters {
@@ -36,13 +37,14 @@
       float: right;
       position: relative;
       top: -3px;
+      right: 3px;
 
       & .up {
         width: 25px;
         height: 10px;
         margin-top: -1px;
         float: right;
-        background-image: url(src/assets/icons/chevron-up.svg);
+        background-image: url("../../../assets/icons/chevron-up.svg");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: 0px -7px;
@@ -61,7 +63,7 @@
         height: 10px;
         margin-top: 9px;
         float: right;
-        background-image: url(src/assets/icons/chevron-down.svg);
+        background-image: url("../../../assets/icons/chevron-down.svg");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: 0px -8px;
@@ -84,10 +86,58 @@
       padding: 10px;
     }
 
+    & .table-name{
+      margin-bottom: 5px;
+    }
+    & .table-season{
+      text-align: center;
+    }
+    & .table-network{
+      text-align: center;
+    }
+    & .table-premiere{
+      text-align: center;
+    }
+
     & span {
-      border: 1px solid greenyellow;
-      margin: 10px;
+      //border: 1px solid greenyellow;
+      border: none;
+      border-radius: 25px;
+      background-color: #ec5c5e;
+      box-sizing: content-box;
+      margin: 5px;
+      padding: 0px 10px;
+      color: #FFFFFF;
     }
 
   }
 }
+
+.table-genre{
+  display: flex;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+.series-pagination{
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.series-pagination ::ng-deep .ngx-pagination .current{
+  background-color: #ffaa00;
+  border-radius: 15px;
+}
+
+.series-pagination ::ng-deep .ngx-pagination a, .ngx-pagination button {
+  text-decoration: none;
+}
+
+.series-pagination ::ng-deep .ngx-pagination a:hover, .ngx-pagination button:hover {
+  background: #ffdc00;
+  border-radius: 15px;
+  text-decoration: none;
+}
+
+
